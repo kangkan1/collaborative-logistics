@@ -3,6 +3,21 @@
     <head>
         <title>Collaborative Logistics</title>
         <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+        <style>
+          #map {
+              width: 50%;
+              height:400px;
+              margin:10px;
+          }
+          #map2 {
+              width: 50%;
+              height:400px;
+              margin:10px;
+          }
+        </style>
+        <script async
+        src="https://maps.googleapis.com/maps/api/js?key=<%= api_key %>&callback=initMap">
+    </script>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark" data-bs-theme="dark">
@@ -17,21 +32,7 @@
                       <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
-                      </a>
-                      <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                      </ul>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link disabled">Disabled</a>
+                      <a class="nav-link" href="about">About</a>
                     </li>
                   </ul>
                   <form class="d-flex" role="search">
@@ -43,7 +44,33 @@
             
         </nav>
         <h2>Index Page</h2>
+        <hr>
+        <div id="map">
+        </div>
+        <div id="map2">
+        </div>
     </body>
     <script href="/javascripts/bootstrap.bundle.min.js"></script>
+    <script>
+      let map;
+      let map2;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 36.2048, lng: 138.2529 },
+          zoom: 8,
+          
+        });
+        const marker = new google.maps.Marker({
+          position: { lat: 36.2048, lng: 138.2529 },
+          map: map,
+        });
+        map2 = new google.maps.Map(document.getElementById("map2"), {
+          center: { lat: -34.397, lng: 150.644 },
+          zoom: 8,
+        });
+      }
+
+      window.initMap = initMap;
+    </script>
 
 </html>

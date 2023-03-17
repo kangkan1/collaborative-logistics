@@ -5,7 +5,7 @@ let keys = require('../config/keys')
 /* GET home page. */
 router.get('/', function(req, res, next) {
   console.log(keys)
-  res.render('index_ejs', { title: 'Collaborative Logistics', api_key:keys.get('google_maps_api_key') });
+  res.render('index_ejs', { title: 'Collaborative Logistics', api_key:keys.get('google_map_api_key') });
 });
 
 router.get('/about', function(req, res, next) {

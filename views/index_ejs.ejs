@@ -3,6 +3,7 @@
     <head>
         <title>Collaborative Logistics</title>
         <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
         <style>
           #map {
               width: 50%;
@@ -45,9 +46,20 @@
         </nav>
         <h2>Index Page</h2>
         <hr>
+        
         <div id="map">
         </div>
         <div id="map2">
+        </div>
+        <div>
+          <table>
+            <% for(let i=0;i<users.length;i++){ %>
+              <tr>
+                <td><%= users[i].id %></td>
+                <td><%= users[i].name %></td>
+              </tr>
+            <% } %>
+          </table>
         </div>
     </body>
     <script href="/javascripts/bootstrap.bundle.min.js"></script>
@@ -56,18 +68,48 @@
       let map2;
       function initMap() {
         map = new google.maps.Map(document.getElementById("map"), {
-          center: { lat: 36.2048, lng: 138.2529 },
+          center: { lat: 37.7749, lng: -122.4194 },
           zoom: 8,
           
         });
         const marker = new google.maps.Marker({
-          position: { lat: 36.2048, lng: 138.2529 },
+          position: { lat: 37.7749, lng: -122.4194 },
           map: map,
         });
-        map2 = new google.maps.Map(document.getElementById("map2"), {
-          center: { lat: -34.397, lng: 150.644 },
-          zoom: 8,
+        var directionsService = new google.maps.DirectionsService();
+  // Call the DirectionsService.route() method
+        directionsService.route({
+          origin: 'San Francisco, CA',
+          destination: 'Los Angeles, CA',
+          travelMode: 'DRIVING'
+        }, function(response, status) {
+          if (status === 'OK') {
+            // Create a new DirectionsRenderer object
+            var directionsRenderer = new google.maps.DirectionsRenderer({
+              map: map,
+              directions: response,
+              draggable: true,
+              polylineOptions: {
+                strokeColor: 'green'
+              }
+            });
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
         });
+        // map = new google.maps.Map(document.getElementById("map"), {
+        //   center: { lat: 36.2048, lng: 138.2529 },
+        //   zoom: 8,
+          
+        // });
+        // const marker = new google.maps.Marker({
+        //   position: { lat: 36.2048, lng: 138.2529 },
+        //   map: map,
+        // });
+        // map2 = new google.maps.Map(document.getElementById("map2"), {
+        //   center: { lat: -34.397, lng: 150.644 },
+        //   zoom: 8,
+        // });
       }
 
       window.initMap = initMap;

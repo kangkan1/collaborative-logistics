@@ -17,11 +17,11 @@ const sequelize = new Sequelize( {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  User.create({
-    id:5,
-    name:"Kunal"
-  }).then((user) => console.log(user.toJSON()))
-  .catch((error) => console.error(error));
+  // User.create({
+  //   id:5,
+  //   name:"Kunal"
+  // }).then((user) => console.log(user.toJSON()))
+  // .catch((error) => console.error(error));
   db.all('SELECT * FROM users', (err, rows) => {
     if (err) {
       console.error(err);
@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
       res.render('error', {status:500})
       return;
     }
-    res.render('index_ejs', { title: 'Collaborative Logistics', api_key:keys.get('google_map_api_key'), users:rows });
+    res.render('index_ejs', { title: 'Collaborative Logistics', api_key:keys.get('google_maps_api_key'), users:rows });
   });
   // res.render('index_ejs', { title: 'Collaborative Logistics', api_key:keys.get('google_map_api_key') });
 });

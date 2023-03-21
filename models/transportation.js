@@ -4,16 +4,19 @@ const sequelize = new Sequelize( {
   storage: './db/db.sqlite'
 });
 
-const Transportation = sequelize.define('users', {
-    id: {
-      type: Sequelize.NUMBER,
-      primaryKey: true
-    },
-    departure_time: {
-      type: Sequelize.DATETIME
-    }
-  },{ timestamps: false });
-  module.exports = User;
+// const Transportation = sequelize.define('users', {
+//     id: {
+//       type: Sequelize.NUMBER,
+//       primaryKey: true
+//     },
+//     departure_time: {
+//       type: Sequelize.DATE
+//     }
+//     arrival_time: {
+//         type: Sequelize.DATE
+//       }
+//   },{ timestamps: false });
+//   module.exports = User;
 
   /*
     Create statement

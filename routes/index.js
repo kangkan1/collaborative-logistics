@@ -53,7 +53,7 @@ router.get('/', function(req, res, next) {
     }
 
     console.log(keys)
-    res.render('index_ejs', { title: 'Collaborative Logistics', api_key:keys.get('google_map_api_key'), users:rows });
+    res.render('index_ejs', { title: 'Collaborative Logistics', api_key:keys.get('google_maps_api_key'), users:rows });
   });
   // res.render('index_ejs', { title: 'Collaborative Logistics', api_key:keys.get('google_map_api_key') });
 });
@@ -61,6 +61,21 @@ router.get('/', function(req, res, next) {
 router.get('/about', function(req, res, next) {
   res.render('about', { title: 'About Us' });
 });
+router.get('/maps', function(req, res, next) {
+  db.all('SELECT * FROM users', (err, rows) => {
+    if (err) {
+      console.error(err);
+      // res.status(500).send('Server Error');
+      res.render('error', {status:500})
+      return;
+    }
+
+    console.log(keys)
+    res.render('maps', { title: 'Maps', api_key:keys.get('google_maps_api_key'), users:rows });
+  });
+  //res.render('maps', { title: 'Maps', api_key:keys.get('google_map_api_key'), users:rows });
+});
+
 
 
 module.exports = router;

@@ -16,8 +16,14 @@ const sequelize = new Sequelize( {
 });
 
 
+// const sqlite3 = require('sqlite3').verbose();
+// const { promisify } = require('util');
+// const db = new sqlite3.Database('../db/db.sqlite');
+// const all = promisify(db.all).bind(db);
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
+
   Transportation.create({
     departure_time: new Date(),
     arrival_time: new Date(),
@@ -37,6 +43,7 @@ router.get('/', function(req, res, next) {
   //   name:"Kunal"
   // }).then((user) => console.log(user.toJSON()))
   // .catch((error) => console.error(error));
+
   db.all('SELECT * FROM users', (err, rows) => {
     if (err) {
       console.error(err);
@@ -44,6 +51,7 @@ router.get('/', function(req, res, next) {
       res.render('error', {status:500})
       return;
     }
+
     console.log(keys)
     res.render('index_ejs', { title: 'Collaborative Logistics', api_key:keys.get('google_map_api_key'), users:rows });
   });

@@ -47,6 +47,7 @@
         <h2>Index Page</h2>
         <hr>
         <h3> <%= api_key %></h3>
+
         <div id="map">
         </div>
         <div id="map2">
@@ -80,6 +81,7 @@
         }
         map = new google.maps.Map(document.getElementById("map"), {
           center: { lat: lat, lng: long },
+
           zoom: 8,
           
         });

@@ -46,7 +46,7 @@
         </nav>
         <h2>Index Page</h2>
         <hr>
-        
+        <h3> <%= api_key %></h3>
         <div id="map">
         </div>
         <div id="map2">
@@ -67,8 +67,19 @@
       let map;
       let map2;
       function initMap() {
+        let lat = 37.7749;
+        let long = -122.4194;
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            lat = position.coords.latitude;
+            long = position.coords.longitude;
+            console.log("Latitude: " + lat + ", Longitude: " + long);
+          });
+        } else {
+          console.log("Geolocation is not supported by this browser.");
+        }
         map = new google.maps.Map(document.getElementById("map"), {
-          center: { lat: 37.7749, lng: -122.4194 },
+          center: { lat: lat, lng: long },
           zoom: 8,
           
         });

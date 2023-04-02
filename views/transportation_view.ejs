@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Collaborative Logistics</title>
+        <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+        <style>
+          #map {
+              width: 50%;
+              height:400px;
+              margin:10px;
+          }
+          #map2 {
+              width: 50%;
+              height:400px;
+              margin:10px;
+          }
+        </style>
+        <script async
+        src="https://maps.googleapis.com/maps/api/js?key=<%= api_key %>&callback=initMap">
+    </script>
+        
+       
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark" data-bs-theme="dark">
+            <div class="container-fluid ">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="about">About</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="../../../transportation">Transportation</a>
+                    </li>
+                  </ul>
+                  <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                  </form>
+                </div>
+            </div>
+            
+        </nav>
+        </div>
+        <div class="d-flex my-2">
+            <div class="col-4" id="map">
+               
+            </div>
+            <div class="col-8 p-1" style="border:solid 1px;">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="blue" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                    <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                </svg>
+                Souce: <%= transportation[0]._from %>
+                <br>
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="green" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                  </svg>
+                  Destination: <%= transportation[0]._to %>
+                  <br>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-sign-stop" viewBox="0 0 16 16">
+                    <path d="M3.16 10.08c-.931 0-1.447-.493-1.494-1.132h.653c.065.346.396.583.891.583.524 0 .83-.246.83-.62 0-.303-.203-.467-.637-.572l-.656-.164c-.61-.147-.978-.51-.978-1.078 0-.706.597-1.184 1.444-1.184.853 0 1.386.475 1.436 1.087h-.645c-.064-.32-.352-.542-.797-.542-.472 0-.77.246-.77.6 0 .261.196.437.553.522l.654.161c.673.164 1.06.487 1.06 1.11 0 .736-.574 1.228-1.544 1.228Zm3.427-3.51V10h-.665V6.57H4.753V6h3.006v.568H6.587Z"/>
+                    <path fill-rule="evenodd" d="M11.045 7.73v.544c0 1.131-.636 1.805-1.661 1.805-1.026 0-1.664-.674-1.664-1.805V7.73c0-1.136.638-1.807 1.664-1.807 1.025 0 1.66.674 1.66 1.807Zm-.674.547v-.553c0-.827-.422-1.234-.987-1.234-.572 0-.99.407-.99 1.234v.553c0 .83.418 1.237.99 1.237.565 0 .987-.408.987-1.237Zm1.15-2.276h1.535c.82 0 1.316.55 1.316 1.292 0 .747-.501 1.289-1.321 1.289h-.865V10h-.665V6.001Zm1.436 2.036c.463 0 .735-.272.735-.744s-.272-.741-.735-.741h-.774v1.485h.774Z"/>
+                    <path fill-rule="evenodd" d="M4.893 0a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146A.5.5 0 0 0 11.107 0H4.893ZM1 5.1 5.1 1h5.8L15 5.1v5.8L10.9 15H5.1L1 10.9V5.1Z"/>
+                  </svg>
+                  
+                  Other Stopping Details: <%= transportation[0].other_stopping_details %>
+                <div class="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-clock-history" viewBox="0 0 16 16">
+                        <path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 0 1-.401.432l-.707-.707z"/>
+                        <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/>
+                        <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
+                      </svg>
+                      <% let date = new Date(transportation[0].departure_time) %>
+    
+                      <% let dateString = date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }); %>
+                      <% let timeString = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }); %>
+    
+                      <% let formattedDatetimeString = `${dateString} ${timeString}`; %>
+                      Departure: <%= formattedDatetimeString %>
+                    
+                      <% let date1 = new Date(transportation[0].arrival_time) %>
+    
+                      <% let dateString1 = date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }); %>
+                      <% let timeString1 = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }); %>
+    
+                      <% let formattedDatetimeString1 = `${dateString1} ${timeString1}`; %>
+                      <br>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-clock-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+                      </svg>
+                      Arrival(Expected): <%= formattedDatetimeString1 %>
+                
+                </div>
+                <div style="word-wrap: break-word;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="blue" class="bi bi-truck-flatbed" viewBox="0 0 16 16">
+                        <path d="M11.5 4a.5.5 0 0 1 .5.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-4 0 1 1 0 0 1-1-1v-1h11V4.5a.5.5 0 0 1 .5-.5zM3 11a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm1.732 0h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4a2 2 0 0 1 1.732 1z"/>
+                    </svg>
+                    <br>
+                    <span>Vehicle details: <%= transportation[0].vehicle_details %></span>
+                    <br>
+                    <span>Vehicle Capacity: <%= transportation[0].occupancy_number %><%= transportation[0].occupancy_unit %></span>
+                    <br>
+                </div>
+                
+            </div>
+          
+        </div>
+    </body>
+    <script href="/javascripts/bootstrap.bundle.min.js"></script>
+    <script>
+        let map;
+      let map2;
+      
+      function initMap() {
+        let lat = 37.7749;
+        let long = -122.4194;
+        
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            lat = position.coords.latitude;
+            long = position.coords.longitude;
+            console.log("Latitude: " + lat + ", Longitude: " + long);
+          });
+        } else {
+          console.log("Geolocation is not supported by this browser.");
+        }
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: lat, lng: long },
+
+          zoom: 8,
+          
+        });
+        const marker = new google.maps.Marker({
+          position: { lat: lat, lng: long },
+          map: map,
+        });
+        var directionsService = new google.maps.DirectionsService();
+  // Call the DirectionsService.route() method
+        let src = '<%= transportation[0]._from %>';
+        console.log(src)
+        let des = '<%= transportation[0]._to %>';
+        directionsService.route({
+          origin: src,
+          destination: des,
+          travelMode: 'DRIVING'
+        }, function(response, status) {
+          if (status === 'OK') {
+            // Create a new DirectionsRenderer object
+            var directionsRenderer = new google.maps.DirectionsRenderer({
+              map: map,
+              directions: response,
+              draggable: true,
+              polylineOptions: {
+                strokeColor: 'green'
+              }
+            });
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+    }
+    </script>
+    
+    
+
+</html>

@@ -79,6 +79,8 @@ router.get('/maps', function(req, res, next) {
 });
 
 router.get('/transportation', function(req, res, next) {
+  // console.log("id:")
+  // console.log(req.params.id)
   db.all('SELECT * FROM transportation;', (err, rows) => {
     if (err) {
       console.error(err);
@@ -89,6 +91,24 @@ router.get('/transportation', function(req, res, next) {
 
     // console.log(keys)
     res.render('transportation', { title: 'Collaborative Logistics | Transportation', transportation:rows });
+  });
+  // res.render('transportation', { title: 'transportation' });
+});
+router.get('/transportation/view/:id', function(req, res, next) {
+  console.log("id:")
+  console.log(req.params.id)
+  db.all('SELECT * FROM transportation where id='+req.params.id+';', (err, rows) => {
+    console.log(rows)
+    if (err) {
+      // console.log("error:")
+      // console.error(err);
+      // res.status(500).send('Server Error');
+      res.render('error', {status:500})
+      return;
+    }
+
+    // console.log(keys)
+    res.render('transportation_view', { title: 'Collaborative Logistics | Transportation', transportation:rows, api_key:keys.get('google_maps_api_key')});
   });
   // res.render('transportation', { title: 'transportation' });
 });

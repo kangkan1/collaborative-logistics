@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Collaborative Logistics</title>
+        <title>Collaborative Logistics | <%= title %></title>
         <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
         <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
         <style>
@@ -35,9 +35,6 @@
                     <li class="nav-item">
                       <a class="nav-link" href="about">About</a>
                     </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="transportation">Transportation</a>
-                    </li>
                   </ul>
                   <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -70,6 +67,7 @@
     <script>
       let map;
       let map2;
+      var marker;
       function initMap() {
         let lat = 37.7749;
         let long = -122.4194;
@@ -92,27 +90,32 @@
           position: { lat: 37.7749, lng: -122.4194 },
           map: map,
         });
-        var directionsService = new google.maps.DirectionsService();
-  // Call the DirectionsService.route() method
-        directionsService.route({
-          origin: 'San Francisco, CA',
-          destination: 'Los Angeles, CA',
-          travelMode: 'DRIVING'
-        }, function(response, status) {
-          if (status === 'OK') {
-            // Create a new DirectionsRenderer object
-            var directionsRenderer = new google.maps.DirectionsRenderer({
-              map: map,
-              directions: response,
-              draggable: true,
-              polylineOptions: {
-                strokeColor: 'green'
-              }
-            });
-          } else {
-            window.alert('Directions request failed due to ' + status);
-          }
+        google.maps.event.addListener(map, 'click', function(event) {
+           placeMarker(event.latLng);
         });
+
+        // uncomment this to disable direction service
+  //       var directionsService = new google.maps.DirectionsService();
+  // // Call the DirectionsService.route() method
+  //       directionsService.route({
+  //         origin: 'San Francisco, CA',
+  //         destination: 'Los Angeles, CA',
+  //         travelMode: 'DRIVING'
+  //       }, function(response, status) {
+  //         if (status === 'OK') {
+  //           // Create a new DirectionsRenderer object
+  //           var directionsRenderer = new google.maps.DirectionsRenderer({
+  //             map: map,
+  //             directions: response,
+  //             draggable: true,
+  //             polylineOptions: {
+  //               strokeColor: 'green'
+  //             }
+  //           });
+  //         } else {
+  //           window.alert('Directions request failed due to ' + status);
+  //         }
+  //       });
         // map = new google.maps.Map(document.getElementById("map"), {
         //   center: { lat: 36.2048, lng: 138.2529 },
         //   zoom: 8,
@@ -126,6 +129,17 @@
         //   center: { lat: -34.397, lng: 150.644 },
         //   zoom: 8,
         // });
+      }
+      function placeMarker(location) {
+        if(marker){
+          marker.setMap(null);
+        }
+        marker = new google.maps.Marker({
+          position: location,
+          map: map
+        });
+        map.setCenter(location);
+        console.log(location.lat() + ',' + location.lng());
       }
 
       window.initMap = initMap;

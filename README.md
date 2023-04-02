@@ -19,3 +19,7 @@ After npm installation run the command
 ## DEBUG=myapp:* npm start
 
 GO to your browser and type http://localhost:3000/
+
+![alt text](https://github.com/kangkan1/collaborative-logistics/blob/master/public/images/tranportation_list.png)
+
+![alt text](https://github.com/kangkan1/collaborative-logistics/blob/master/public/images/transportation_1.png)
